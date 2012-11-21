@@ -164,15 +164,31 @@ vector<float> vectorSumZ(vector< vector<float> > Z)
     return sumZ;
 }
 
-int indexOfMaxSumZ(vector<float> vectorSumZ)
+bool isAskedQuestion(int indexOfQuestion, vector<int> questions)
+{
+    bool isAsked = false;
+    
+    for (int i = 0; i < questions.size(); i++) {
+        if (questions[i] == indexOfQuestion) {
+            isAsked = true;
+            break;
+        }
+    }
+    
+    return isAsked;
+}
+
+int indexOfMaxSumZ(vector<float> vectorSumZ, vector<int> questions)
 {
     float maxSumZ = -1;
     int indexMaxSumZ = -1;
     
     for (int i = 0; i < vectorSumZ.size(); i++) {
         if (vectorSumZ[i] > maxSumZ) {
-            maxSumZ = vectorSumZ[i];
-            indexMaxSumZ = i;
+            if (!isAskedQuestion(i, questions)) {
+                maxSumZ = vectorSumZ[i];
+                indexMaxSumZ = i;
+            }
         }
     }
     
@@ -187,6 +203,9 @@ int main(int argc, const char * argv[])
     fclose(in);
     
 	FILE *out = fopen("/Users/ruslan/Developer/ProbabilisticParser/ProbabilisticParser/output.txt", "w");
+    
+    vector<int> questions;
+    vector<int> answers;
     
     fprintf(out, "\nVector PS:\n\n");
     outputVectorTo(out, PS);
@@ -210,8 +229,24 @@ int main(int argc, const char * argv[])
     vector<float> sumZ = vectorSumZ(Z);
     outputVectorTo(out, sumZ);
     
-    int indexMaxSumZ = indexOfMaxSumZ(sumZ);
+    int indexMaxSumZ = indexOfMaxSumZ(sumZ, questions);
     fprintf(out, "\nIndex of max sum Z: %d\n\n", indexMaxSumZ);
+    
+    questions.push_back(indexMaxSumZ);
+    
+    fprintf(out, "\nVector questions:\n\n");
+    outputVectorTo(out, questions);
+    
+    int answer = INT32_MIN;
+    do {
+        printf("Please respond to question #%d ('1' - Yes, '0' - I don't know, '-1' - No): ", indexMaxSumZ);
+        scanf("%d", &answer);
+    } while (answer != 1 && answer != -1 && answer != 0);
+    
+    answers.push_back(answer);
+    
+    fprintf(out, "\nVector answers:\n\n");
+    outputVectorTo(out, answers);
     
     fclose(out);
     

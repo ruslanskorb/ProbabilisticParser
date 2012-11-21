@@ -61,3 +61,11 @@ Vector sum Z:
 
 Index of max sum Z: 2
 
+
+Vector questions:
+
+2 
+
+Vector answers:
+
+1 
