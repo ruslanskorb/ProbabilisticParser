@@ -195,6 +195,27 @@ int indexOfMaxSumZ(vector<float> vectorSumZ, vector<int> questions)
     return indexMaxSumZ;
 }
 
+vector<float> PSQuestions(vector< vector< vector<float> > > PSigns, vector< vector<float> > vectorPSQuestions, int question, int answer)
+{
+    vector<float> vPSQuestions;
+    
+    for (int i = 0; i < PSigns[question].size(); i++) {
+        float PSQuestionValue;
+        
+        if (answer == 1) {
+            PSQuestionValue = (PSigns[question][i][0] * vectorPSQuestions[vectorPSQuestions.size() - 1][i]) / ( (PSigns[question][i][0] * vectorPSQuestions[vectorPSQuestions.size() - 1][i]) + ( PSigns[question][i][1] * (1 - vectorPSQuestions[vectorPSQuestions.size() - 1][i]) ) );
+        }
+        else if (answer == -1)
+        {
+            PSQuestionValue = ( (1 - PSigns[question][i][0]) * vectorPSQuestions[vectorPSQuestions.size() - 1][i]) / ( (1 - PSigns[question][i][0] * vectorPSQuestions[vectorPSQuestions.size() - 1][i]) - ( PSigns[question][i][1] * (1 - vectorPSQuestions[vectorPSQuestions.size() - 1][i]) ) );
+        }
+        
+        vPSQuestions.push_back(PSQuestionValue);
+    }
+    
+    return vPSQuestions;
+}
+
 int main(int argc, const char * argv[])
 {
     FILE *in = fopen("/Users/ruslan/Developer/ProbabilisticParser/ProbabilisticParser/input.txt", "r");
@@ -206,6 +227,7 @@ int main(int argc, const char * argv[])
     
     vector<int> questions;
     vector<int> answers;
+    vector< vector<float> > vectorPSQuestions;
     
     fprintf(out, "\nVector PS:\n\n");
     outputVectorTo(out, PS);
@@ -213,40 +235,52 @@ int main(int argc, const char * argv[])
     fprintf(out, "\nVector PSigns:\n\n");
     outputVectorTo(out, PSigns);
     
-    fprintf(out, "\nVector PSq:\n\n");
-    vector< vector<float> > PSq = vectorPSq(PS, PSigns);
-    outputDualVectorTo(out, PSq);
+    vector<float> vPSQuestions = PS;
     
-    fprintf(out, "\nVector PSqInverse:\n\n");
-    vector< vector<float> > PSqInverse = vectorPSqInverse(PS, PSigns);
-    outputDualVectorTo(out, PSqInverse);
+    vectorPSQuestions.push_back(vPSQuestions);
     
-    fprintf(out, "\nVector Z:\n\n");
-    vector< vector<float> > Z = vectorZ(PSq, PSqInverse);
-    outputDualVectorTo(out, Z);
-    
-    fprintf(out, "\nVector sum Z:\n\n");
-    vector<float> sumZ = vectorSumZ(Z);
-    outputVectorTo(out, sumZ);
-    
-    int indexMaxSumZ = indexOfMaxSumZ(sumZ, questions);
-    fprintf(out, "\nIndex of max sum Z: %d\n\n", indexMaxSumZ);
-    
-    questions.push_back(indexMaxSumZ);
-    
-    fprintf(out, "\nVector questions:\n\n");
-    outputVectorTo(out, questions);
-    
-    int answer = INT32_MIN;
-    do {
-        printf("Please respond to question #%d ('1' - Yes, '0' - I don't know, '-1' - No): ", indexMaxSumZ);
-        scanf("%d", &answer);
-    } while (answer != 1 && answer != -1 && answer != 0);
-    
-    answers.push_back(answer);
-    
-    fprintf(out, "\nVector answers:\n\n");
-    outputVectorTo(out, answers);
+    for (int i = 0; i < PSigns.size(); i++) {
+        fprintf(out, "\nVector PSq:\n\n");
+        vector< vector<float> > PSq = vectorPSq(vPSQuestions, PSigns);
+        outputDualVectorTo(out, PSq);
+        
+        fprintf(out, "\nVector PSqInverse:\n\n");
+        vector< vector<float> > PSqInverse = vectorPSqInverse(vPSQuestions, PSigns);
+        outputDualVectorTo(out, PSqInverse);
+        
+        fprintf(out, "\nVector Z:\n\n");
+        vector< vector<float> > Z = vectorZ(PSq, PSqInverse);
+        outputDualVectorTo(out, Z);
+        
+        fprintf(out, "\nVector sum Z:\n\n");
+        vector<float> sumZ = vectorSumZ(Z);
+        outputVectorTo(out, sumZ);
+        
+        int indexMaxSumZ = indexOfMaxSumZ(sumZ, questions);
+        fprintf(out, "\nIndex of max sum Z: %d\n\n", indexMaxSumZ);
+        
+        questions.push_back(indexMaxSumZ);
+        
+        fprintf(out, "\nVector questions:\n\n");
+        outputVectorTo(out, questions);
+        
+        int answer = INT32_MIN;
+        do {
+            printf("Please respond to question #%d ('1' - Yes, '0' - I don't know, '-1' - No): ", indexMaxSumZ);
+            scanf("%d", &answer);
+        } while (answer != 1 && answer != -1 && answer != 0);
+        
+        answers.push_back(answer);
+        
+        fprintf(out, "\nVector answers:\n\n");
+        outputVectorTo(out, answers);
+        
+        vPSQuestions = PSQuestions(PSigns, vectorPSQuestions, indexMaxSumZ, answer);
+        fprintf(out, "\nPS questions:\n\n");
+        outputVectorTo(out, vPSQuestions);
+        
+        vectorPSQuestions.push_back(vPSQuestions);
+    }
     
     fclose(out);
     
