@@ -59,8 +59,9 @@ Vector sum Z:
 
 0.573589 0.527544 0.873372 0.820846 0.660094 0.580436 0.597349 0.289105 0.851978 0.632949 
 
-Index of max sum Z: 2
+Index of max sum Z:
 
+2
 
 Vector questions:
 
@@ -69,10 +70,6 @@ Vector questions:
 Vector answers:
 
 1 
-
-PS questions:
-
-0.750000 0.333333 0.631579 
 
 Vector PSq:
 
@@ -117,8 +114,9 @@ Vector sum Z:
 
 0.600665 0.531968 0.731702 0.696776 0.587959 0.611428 0.552132 0.302191 0.734545 0.740314 
 
-Index of max sum Z: 9
+Index of max sum Z:
 
+9
 
 Vector questions:
 
@@ -127,10 +125,6 @@ Vector questions:
 Vector answers:
 
 1 1 
-
-PS questions:
-
-0.500000 0.111111 0.533333 
 
 Vector PSq:
 
@@ -175,8 +169,9 @@ Vector sum Z:
 
 0.548209 0.547186 0.800580 0.760113 0.599684 0.511777 0.536939 0.284019 0.821043 0.574031 
 
-Index of max sum Z: 8
+Index of max sum Z:
 
+8
 
 Vector questions:
 
@@ -185,10 +180,6 @@ Vector questions:
 Vector answers:
 
 1 1 1 
-
-PS questions:
-
-0.875000 0.058824 0.631579 
 
 Vector PSq:
 
@@ -233,8 +224,9 @@ Vector sum Z:
 
 0.399077 0.386923 0.507591 0.534913 0.396055 0.341083 0.377654 0.192485 0.435390 0.399065 
 
-Index of max sum Z: 3
+Index of max sum Z:
 
+3
 
 Vector questions:
 
@@ -243,10 +235,6 @@ Vector questions:
 Vector answers:
 
 1 1 1 1 
-
-PS questions:
-
-0.933333 0.085714 0.895522 
 
 Vector PSq:
 
@@ -291,8 +279,9 @@ Vector sum Z:
 
 0.236651 0.204537 0.262424 0.250702 0.213871 0.262332 0.203991 0.114088 0.262482 0.280535 
 
-Index of max sum Z: 5
+Index of max sum Z:
 
+5
 
 Vector questions:
 
@@ -301,10 +290,6 @@ Vector questions:
 Vector answers:
 
 1 1 1 1 1 
-
-PS questions:
-
-0.875000 0.219512 0.927835 
 
 Vector PSq:
 
@@ -349,8 +334,9 @@ Vector sum Z:
 
 0.321572 0.249206 0.355122 0.300034 0.297433 0.420023 0.279033 0.167061 0.429405 0.471768 
 
-Index of max sum Z: 0
+Index of max sum Z:
 
+0
 
 Vector questions:
 
@@ -359,10 +345,6 @@ Vector questions:
 Vector answers:
 
 1 1 1 1 1 1 
-
-PS questions:
-
-0.913043 0.360000 0.962567 
 
 Vector PSq:
 
@@ -407,8 +389,9 @@ Vector sum Z:
 
 0.315812 0.220322 0.319890 0.252708 0.282220 0.422793 0.269358 0.158810 0.394129 0.509806 
 
-Index of max sum Z: 4
+Index of max sum Z:
 
+4
 
 Vector questions:
 
@@ -417,10 +400,6 @@ Vector questions:
 Vector answers:
 
 1 1 1 1 1 1 1 
-
-PS questions:
-
-0.954545 0.529412 0.987203 
 
 Vector PSq:
 
@@ -465,8 +444,9 @@ Vector sum Z:
 
 0.271267 0.179438 0.250218 0.188505 0.231990 0.357140 0.225243 0.133213 0.322895 0.505539 
 
-Index of max sum Z: 6
+Index of max sum Z:
 
+6
 
 Vector questions:
 
@@ -475,10 +455,6 @@ Vector questions:
 Vector answers:
 
 1 1 1 1 1 1 1 1 
-
-PS questions:
-
-0.969231 0.692308 0.995698 
 
 Vector PSq:
 
@@ -523,8 +499,9 @@ Vector sum Z:
 
 0.209909 0.144963 0.185620 0.140109 0.174460 0.268903 0.169887 0.105997 0.271886 0.476962 
 
-Index of max sum Z: 1
+Index of max sum Z:
 
+1
 
 Vector questions:
 
@@ -533,10 +510,6 @@ Vector questions:
 Vector answers:
 
 1 1 1 1 1 1 1 1 1 
-
-PS questions:
-
-0.984375 0.600000 0.997537 
 
 Vector PSq:
 
@@ -581,8 +554,9 @@ Vector sum Z:
 
 0.231004 0.144754 0.196381 0.141523 0.190583 0.297747 0.188260 0.107345 0.243698 0.454374 
 
-Index of max sum Z: 7
+Index of max sum Z:
 
+7
 
 Vector questions:
 
@@ -594,4 +568,41 @@ Vector answers:
 
 PS questions:
 
+0.750000 0.333333 0.631579 
+0.500000 0.111111 0.533333 
+0.875000 0.058824 0.631579 
+0.933333 0.085714 0.895522 
+0.875000 0.219512 0.927835 
+0.913043 0.360000 0.962567 
+0.954545 0.529412 0.987203 
+0.969231 0.692308 0.995698 
+0.984375 0.600000 0.997537 
 0.976744 0.652174 0.996719 
+
+P max questions:
+
+0.900000 0.500000 0.872727 
+0.920455 0.600000 0.886836 
+0.987805 0.627907 0.921600 
+0.993865 0.716814 0.983271 
+0.994543 0.883636 0.988785 
+0.996355 0.938224 0.994361 
+0.998174 0.968127 0.998113 
+0.998782 0.983806 0.999370 
+0.999391 0.985801 0.999640 
+0.999467 0.988609 0.999692 
+
+P min questions:
+
+0.700000 0.307692 0.533333 
+0.437500 0.100000 0.432433 
+0.205882 0.052632 0.400000 
+0.162791 0.046358 0.270270 
+0.088608 0.036431 0.244755 
+0.078400 0.027575 0.156250 
+0.070301 0.024586 0.125899 
+0.062059 0.021914 0.100740 
+0.055547 0.014717 0.053042 
+0.037730 0.012294 0.040316 
+
+Accepted hypothesis is number 2 with probability 0.996719

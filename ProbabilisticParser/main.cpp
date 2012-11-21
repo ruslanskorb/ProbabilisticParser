@@ -195,9 +195,13 @@ int indexOfMaxSumZ(vector<float> vectorSumZ, vector<int> questions)
     return indexMaxSumZ;
 }
 
-vector<float> PSQuestions(vector< vector< vector<float> > > PSigns, vector< vector<float> > vectorPSQuestions, int question, int answer)
+vector<float> PSQuestions(vector< vector< vector<float> > > PSigns, vector<float> firstVPSQuestions, vector< vector<float> > vectorPSQuestions, int question, int answer)
 {
     vector<float> vPSQuestions;
+    
+    if (vectorPSQuestions.size() == 0) {
+        vectorPSQuestions.push_back(firstVPSQuestions);
+    }
     
     for (int i = 0; i < PSigns[question].size(); i++) {
         float PSQuestionValue;
@@ -216,6 +220,71 @@ vector<float> PSQuestions(vector< vector< vector<float> > > PSigns, vector< vect
     return vPSQuestions;
 }
 
+vector<float> PMaxQuestions(vector< vector< vector<float> > > PSigns, vector< vector<float> > vectorPSQuestions, vector< vector<float> > vectorPMaxQuestions, int question)
+{
+    vector<float> vPMaxQuestions;
+    
+    if (vectorPMaxQuestions.size() == 0) {
+        vectorPMaxQuestions.push_back(vectorPSQuestions[0]);
+    }
+    
+    for (int i = 0; i < PSigns[question].size(); i++) {
+        float PMaxQuestionValue;
+        
+        if (PSigns[question][i][0] > PSigns[question][i][1]) {
+            PMaxQuestionValue = (PSigns[question][i][0] * vectorPMaxQuestions[vectorPMaxQuestions.size() - 1][i]) / ( (PSigns[question][i][0] * vectorPMaxQuestions[vectorPMaxQuestions.size() - 1][i]) + ( PSigns[question][i][1] * (1 - vectorPMaxQuestions[vectorPMaxQuestions.size() - 1][i]) ) );
+        }
+        else
+        {
+            PMaxQuestionValue = ( (1 - PSigns[question][i][0]) * vectorPMaxQuestions[vectorPMaxQuestions.size() - 1][i]) / ( (1 - PSigns[question][i][0] * vectorPMaxQuestions[vectorPMaxQuestions.size() - 1][i]) - ( PSigns[question][i][1] * (1 - vectorPMaxQuestions[vectorPMaxQuestions.size() - 1][i]) ) );
+        }
+        
+        vPMaxQuestions.push_back(PMaxQuestionValue);
+    }
+    
+    return vPMaxQuestions;
+}
+
+vector<float> PMinQuestions(vector< vector< vector<float> > > PSigns, vector< vector<float> > vectorPSQuestions, vector< vector<float> > vectorPMinQuestions, int question)
+{
+    vector<float> vPMinQuestions;
+    
+    if (vectorPMinQuestions.size() == 0) {
+        vectorPMinQuestions.push_back(vectorPSQuestions[0]);
+    }
+    
+    for (int i = 0; i < PSigns[question].size(); i++) {
+        float PMinQuestionValue;
+        
+        if (PSigns[question][i][0] > PSigns[question][i][1]) {
+            PMinQuestionValue = ( (1 - PSigns[question][i][0]) * vectorPMinQuestions[vectorPMinQuestions.size() - 1][i]) / ( (1 - PSigns[question][i][0] * vectorPMinQuestions[vectorPMinQuestions.size() - 1][i]) - ( PSigns[question][i][1] * (1 - vectorPMinQuestions[vectorPMinQuestions.size() - 1][i]) ) );
+        }
+        else
+        {
+            PMinQuestionValue = (PSigns[question][i][0] * vectorPMinQuestions[vectorPMinQuestions.size() - 1][i]) / ( (PSigns[question][i][0] * vectorPMinQuestions[vectorPMinQuestions.size() - 1][i]) + ( PSigns[question][i][1] * (1 - vectorPMinQuestions[vectorPMinQuestions.size() - 1][i]) ) );
+        }
+        
+        vPMinQuestions.push_back(PMinQuestionValue);
+    }
+    
+    return vPMinQuestions;
+}
+
+int indexOfHypotesisWithMaxPSQuestion(vector<float> vPSQuestions)
+{
+    float maxPMax = INT32_MIN;
+    int index = 0;
+    
+    for (int i = 0; i < vPSQuestions.size(); i++) {
+        if (vPSQuestions[i] > maxPMax) {
+            maxPMax = vPSQuestions[i];
+            index = i;
+        }
+    }
+    
+    return index;
+}
+
 int main(int argc, const char * argv[])
 {
     FILE *in = fopen("/Users/ruslan/Developer/ProbabilisticParser/ProbabilisticParser/input.txt", "r");
@@ -228,6 +297,8 @@ int main(int argc, const char * argv[])
     vector<int> questions;
     vector<int> answers;
     vector< vector<float> > vectorPSQuestions;
+    vector< vector<float> > vectorPMaxQuestions;
+    vector< vector<float> > vectorPMinQuestions;
     
     fprintf(out, "\nVector PS:\n\n");
     outputVectorTo(out, PS);
@@ -236,8 +307,11 @@ int main(int argc, const char * argv[])
     outputVectorTo(out, PSigns);
     
     vector<float> vPSQuestions = PS;
+    vector<float> vPMaxQuestions;
+    vector<float> vPMinQuestions;
     
-    vectorPSQuestions.push_back(vPSQuestions);
+    bool isAcceptedHypothesis = false;
+    int indexOfAcceptedHypoteses = -1;
     
     for (int i = 0; i < PSigns.size(); i++) {
         fprintf(out, "\nVector PSq:\n\n");
@@ -257,7 +331,7 @@ int main(int argc, const char * argv[])
         outputVectorTo(out, sumZ);
         
         int indexMaxSumZ = indexOfMaxSumZ(sumZ, questions);
-        fprintf(out, "\nIndex of max sum Z: %d\n\n", indexMaxSumZ);
+        fprintf(out, "\nIndex of max sum Z:\n\n%d\n", indexMaxSumZ);
         
         questions.push_back(indexMaxSumZ);
         
@@ -275,11 +349,44 @@ int main(int argc, const char * argv[])
         fprintf(out, "\nVector answers:\n\n");
         outputVectorTo(out, answers);
         
-        vPSQuestions = PSQuestions(PSigns, vectorPSQuestions, indexMaxSumZ, answer);
-        fprintf(out, "\nPS questions:\n\n");
-        outputVectorTo(out, vPSQuestions);
-        
+        vPSQuestions = PSQuestions(PSigns, vPSQuestions, vectorPSQuestions, indexMaxSumZ, answer);
         vectorPSQuestions.push_back(vPSQuestions);
+        
+        vPMaxQuestions = PMaxQuestions(PSigns, vectorPSQuestions, vectorPMaxQuestions, indexMaxSumZ);
+        vectorPMaxQuestions.push_back(vPMaxQuestions);
+        
+        vPMinQuestions = PMinQuestions(PSigns, vectorPSQuestions, vectorPMinQuestions, indexMaxSumZ);
+        vectorPMinQuestions.push_back(vPMinQuestions);
+        
+        for (int j = 0; j < vPMaxQuestions.size(); j++) {
+            if (vPMinQuestions[j] > vPSQuestions[j]) {
+                break;
+            } else if (vPMaxQuestions[j] < vPSQuestions[j]) {
+                indexOfAcceptedHypoteses = j;
+                isAcceptedHypothesis = true;
+                break;
+            }
+        }
+        
+        if (isAcceptedHypothesis) {
+            break;
+        }
+    }
+    
+    fprintf(out, "\nPS questions:\n\n");
+    outputDualVectorTo(out, vectorPSQuestions);
+    
+    fprintf(out, "\nP max questions:\n\n");
+    outputDualVectorTo(out, vectorPMaxQuestions);
+    
+    fprintf(out, "\nP min questions:\n\n");
+    outputDualVectorTo(out, vectorPMinQuestions);
+    
+    if (!isAcceptedHypothesis) {
+        indexOfAcceptedHypoteses = indexOfHypotesisWithMaxPSQuestion(vPSQuestions);
+        fprintf(out, "\nAccepted hypothesis is number %d with probability %f\n", indexOfAcceptedHypoteses, vPSQuestions[indexOfAcceptedHypoteses]);
+    } else {
+        fprintf(out, "\nAccepted hypothesis is number %d\n", indexOfAcceptedHypoteses);
     }
     
     fclose(out);
