@@ -213,6 +213,10 @@ vector<float> PSQuestions(vector< vector< vector<float> > > PSigns, vector<float
         {
             PSQuestionValue = ( (1 - PSigns[question][i][0]) * vectorPSQuestions[vectorPSQuestions.size() - 1][i]) / ( (1 - PSigns[question][i][0] * vectorPSQuestions[vectorPSQuestions.size() - 1][i]) - ( PSigns[question][i][1] * (1 - vectorPSQuestions[vectorPSQuestions.size() - 1][i]) ) );
         }
+        else if (answer == 0)
+        {
+            PSQuestionValue = vectorPSQuestions[vectorPSQuestions.size() - 1][i];
+        }
         
         vPSQuestions.push_back(PSQuestionValue);
     }
